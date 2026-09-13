@@ -8,38 +8,38 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/54e8214f-d5e7-4b14-94ca-6caf829c4403";
+    { device = "/dev/disk/by-uuid/abe210d4-e743-4ede-86a7-649b446316cb";
       fsType = "btrfs";
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/54e8214f-d5e7-4b14-94ca-6caf829c4403";
+    { device = "/dev/disk/by-uuid/abe210d4-e743-4ede-86a7-649b446316cb";
       fsType = "btrfs";
       options = [ "subvol=home" ];
     };
 
   fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/54e8214f-d5e7-4b14-94ca-6caf829c4403";
+    { device = "/dev/disk/by-uuid/abe210d4-e743-4ede-86a7-649b446316cb";
       fsType = "btrfs";
       options = [ "subvol=nix" ];
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/FC71-7ADF";
+    { device = "/dev/disk/by-uuid/1570-4933";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/1ea5b35c-d478-46b0-a969-56672c2ac269"; }
+    [ { device = "/dev/disk/by-uuid/3a54595d-5354-4908-a041-095c3882c48f"; }
     ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
